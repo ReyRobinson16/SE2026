@@ -1,6 +1,6 @@
 package project.annotations;
 
-public class TestCode {
+public class TestCodee {
     public void validMethod() {
         System.out.println("Valid code.")
     }
