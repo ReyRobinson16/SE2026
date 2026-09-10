@@ -35,3 +35,5 @@ jobs:
 
     - name: Build with Gradle Wrapper
       run: chmod a+rwx gradlew; ./gradlew build
+env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
