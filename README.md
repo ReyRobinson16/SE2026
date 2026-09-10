@@ -1,3 +1,13 @@
-# Software Engineering Project Starter Code
+# SE2026
 
-This repo will start you off with an initial configuration that you'll modify as part of Checkpoint 1. As part of the modifications, you'll eventually delete the contents of this README and replace it with documentation for your project.
+## Overview
+Software Engineering project repository for Checkpoint 1.
+
+## Team Members
+* Reynaldo Robinson
+Ali
+Cridore16
+
+## Setup & Execution
+* **Build Project:** `./gradlew build`
+* **Run Tests:** `./gradlew test`
