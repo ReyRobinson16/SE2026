@@ -4,5 +4,5 @@ import project.annotations.ConceptualAPI;
 
 @ConceptualAPI
 public interface ComputationAPI {
-    ComputationResult computePrimeMetrics(int n);
+    String computeResult(int input);
 }
