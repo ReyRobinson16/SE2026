@@ -1,3 +1,4 @@
+package project.checkpointtests;
 public class FizzBuzz {
     public static void main(String[] args) {
         // Bug 1: Loop should be 1 to 100 inclusive
@@ -12,5 +13,5 @@ public class FizzBuzz {
                 System.out.println(i);
             }
         }
-    
+    }
 }
