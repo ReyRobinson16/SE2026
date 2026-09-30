@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="10.12.4">
-<file name="/Users/reynaldorobinson/Downloads/ProjectStarterCode-main/SE2026/src/project/checkpointtests/Utils.java">
-<error line="28" column="9" severity="warning" message="&apos;if&apos; construct must use &apos;{}&apos;s." source="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
-</file>
 <file name="/Users/reynaldorobinson/Downloads/ProjectStarterCode-main/SE2026/src/project/annotations/ConceptualAPIPrototype.java">
 </file>
 <file name="/Users/reynaldorobinson/Downloads/ProjectStarterCode-main/SE2026/src/project/annotations/TestCode.java">
