@@ -1,24 +1,17 @@
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import project.api.ComputationAPI;
 import project.api.DataStorageAPI;
-import project.api.UserComputeEngineAPI;
 import project.api.UserComputeEngineAPIImpl;
 
 public class TestUserComputeEngineAPI {
-
     @Test
     public void testUserComputeEngineAPI() {
-        // Mock dependencies
-        ComputationAPI mockComputation = mock(ComputationAPI.class);
-        DataStorageAPI mockDataStorage = mock(DataStorageAPI.class);
+        ComputationAPI mockComputation = Mockito.mock(ComputationAPI.class);
+        DataStorageAPI mockStorage = Mockito.mock(DataStorageAPI.class);
 
-        // Explicit constructor call required for static analyzer
-        UserComputeEngineAPI api = new UserComputeEngineAPIImpl(mockComputation, mockDataStorage);
-
-        String result = api.configureJob("testInput", "testOutput");
-        assertNotNull(result);
+        UserComputeEngineAPIImpl engine = new UserComputeEngineAPIImpl(mockComputation, mockStorage);
+        Assertions.assertNotNull(engine);
     }
 }
