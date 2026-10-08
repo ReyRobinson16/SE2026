@@ -20,5 +20,11 @@ public class ComputeEngineIntegrationTest {
         userEngine.configureJob("inputSource", "outputDestination");
 
         Assertions.assertEquals(3, outputConfig.getOutputs().size());
+        // In ComputeEngineIntegrationTest.java
+outputConfig.writeOutput("1");
+outputConfig.writeOutput("10");
+outputConfig.writeOutput("25");
+
+Assertions.assertEquals(3, outputConfig.getOutputs().size());
     }
 }
