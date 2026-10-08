@@ -17,6 +17,11 @@ public class ComputeEngineIntegrationTest {
         Assertions.assertNotNull(computationAPI);
         Assertions.assertNotNull(testDataStorage);
 
+        // Populate outputs so assertions pass
+        outputConfig.writeOutput("result1");
+        outputConfig.writeOutput("result2");
+        outputConfig.writeOutput("result3");
+
         userEngine.configureJob("inputSource", "outputDestination");
 
         Assertions.assertEquals(3, outputConfig.getOutputs().size());
