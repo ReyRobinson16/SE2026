@@ -4,5 +4,5 @@ import project.annotations.ConceptualAPI;
 
 @ConceptualAPI
 public interface ComputationAPI {
-    String compute(int input);
+    String computeResult(int input);
 }
