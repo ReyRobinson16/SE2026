@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestComputationAPI" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-10-08T21:39:31" hostname="Mac" time="2.107">
+  <properties/>
+  <testcase name="testComputationAPI()" classname="TestComputationAPI" time="2.107"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
