@@ -14,12 +14,22 @@ public class UserComputeEngineAPIImpl implements UserComputeEngineAPI {
         this.dataStorageAPI = dataStorageAPI;
     }
 
+    public ComputationAPI getComputationAPI() {
+        return computationAPI;
+    }
+
+    public DataStorageAPI getDataStorageAPI() {
+        return dataStorageAPI;
+    }
+
     @Override
+    @SuppressWarnings("unused")
     public String configureJob(String inputSource, String outputDestination, char delimiter) {
         return "";
     }
 
     @Override
+    @SuppressWarnings("unused")
     public String configureJob(String inputSource, String outputDestination) {
         return "";
     }
