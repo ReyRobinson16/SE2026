@@ -4,8 +4,9 @@ import project.annotations.ConceptualAPIPrototype;
 
 @ConceptualAPIPrototype
 public class ComputationPrototype {
-    public ComputeResult runPrototype(ComputationAPI api) {
-        ComputeRequest request = new ComputeRequest(100);
+
+    @ConceptualAPIPrototype
+    public ComputeResult prototypeMethod(ComputationAPI api, ComputeRequest request) {
         return api.compute(request);
     }
 }
