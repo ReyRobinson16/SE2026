@@ -1,32 +1,50 @@
 package project.checkpointtests;
+
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import project.api.ComputationAPIImpl;
-import project.api.JobConfig;
-import project.api.UserComputeEngineAPIImpl;
+import org.junit.jupiter.api.Assertions;
+import project.api.*;
 
 public class ComputeEngineIntegrationTest {
 
     @Test
-    public void testComputeEngineIntegration() {
-        InMemoryInputConfig inputConfig = new InMemoryInputConfig(List.of(1, 10, 25));
-        InMemoryOutputConfig outputConfig = new InMemoryOutputConfig();
+    public void testCompleteSystem() {
+        InMemoryInputConfig input =
+                new InMemoryInputConfig(List.of(100));
 
-        UserComputeEngineAPIImpl userEngine = new UserComputeEngineAPIImpl();
-        ComputationAPIImpl computationAPI = new ComputationAPIImpl();
-        InMemoryDataStorageAPI testDataStorage = new InMemoryDataStorageAPI(inputConfig, outputConfig);
+        InMemoryOutputConfig output =
+                new InMemoryOutputConfig();
 
-        Assertions.assertNotNull(userEngine);
-        Assertions.assertNotNull(computationAPI);
-        Assertions.assertNotNull(testDataStorage);
+        InMemoryDataStorageAPI storage =
+                new InMemoryDataStorageAPI(input, output);
 
-        outputConfig.writeOutput("result1");
-        outputConfig.writeOutput("result2");
-        outputConfig.writeOutput("result3");
+        ComputationAPIImpl computation =
+                new ComputationAPIImpl();
 
-        JobConfig config = new JobConfig("inputSource", "outputDestination", ';');
-        String result = userEngine.configureJob(config);
-        Assertions.assertNotNull(result);
+        UserComputeEngineAPIImpl network =
+                new UserComputeEngineAPIImpl(computation, storage);
+
+        JobConfig job = new JobConfig("input", "output");
+
+        Assertions.assertEquals(
+            "input -> output",
+            network.configureJob(job)
+        );
+
+        JobManager manager = new JobManager(computation, storage);
+
+        StorageConfig config =
+                new StorageConfig("input", "output");
+
+        for (int number : input.getInputs()) {
+            manager.runJob(number, config);
+        }
+
+        Assertions.assertEquals(1, output.getResults().size());
+
+        Assertions.assertEquals(
+            "100: largest_prime=97 total_primes=25",
+            output.getResults().get(0).getOutput()
+        );
     }
 }

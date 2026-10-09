@@ -6,7 +6,8 @@ import project.annotations.NetworkAPIPrototype;
 public class UserComputeEnginePrototype {
 
     @NetworkAPIPrototype
-    public String runPrototype(UserComputeEngineAPI api, JobConfig config) {
+    public String prototypeMethod(UserComputeEngineAPI api) {
+        JobConfig config = null;
         return api.configureJob(config);
     }
 }

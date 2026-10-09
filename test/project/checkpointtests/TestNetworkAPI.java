@@ -1,17 +1,20 @@
 package project.checkpointtests;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import project.api.JobConfig;
-import project.api.UserComputeEngineAPI;
-import project.api.UserComputeEngineAPIImpl;
+import org.junit.jupiter.api.Assertions;
+import project.api.*;
 
 public class TestNetworkAPI {
+
     @Test
-    public void testNetworkAPISmoke() {
-        UserComputeEngineAPI api = new UserComputeEngineAPIImpl();
-        JobConfig config = new JobConfig("in.csv", "out.csv", ';');
+    public void testConfigureJob() {
+        UserComputeEngineAPIImpl api =
+                new UserComputeEngineAPIImpl();
+
+        JobConfig config = new JobConfig("input", "output");
+
         String result = api.configureJob(config);
-        Assertions.assertNotNull(result);
+
+        Assertions.assertEquals("input -> output", result);
     }
 }

@@ -1,14 +1,14 @@
 package project.api;
 
 public class JobConfig {
+
     private final String inputSource;
     private final String outputDestination;
-    private final char delimiter;
 
-    public JobConfig(String inputSource, String outputDestination, char delimiter) {
+    public JobConfig(String inputSource,
+                     String outputDestination) {
         this.inputSource = inputSource;
         this.outputDestination = outputDestination;
-        this.delimiter = delimiter;
     }
 
     public String getInputSource() {
@@ -17,9 +17,5 @@ public class JobConfig {
 
     public String getOutputDestination() {
         return outputDestination;
-    }
-
-    public char getDelimiter() {
-        return delimiter;
     }
 }

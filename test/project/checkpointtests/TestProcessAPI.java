@@ -1,22 +1,24 @@
 package project.checkpointtests;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import project.api.ComputeResult;
-import project.api.DataStorageAPI;
-import project.api.DataStorageAPIImpl;
-import project.api.StorageConfig;
+import org.junit.jupiter.api.Assertions;
+import project.api.*;
 
 public class TestProcessAPI {
-    @Test
-    public void testProcessAPISmoke() {
-        DataStorageAPI api = new DataStorageAPIImpl();
-        StorageConfig config = new StorageConfig("input.txt");
-        ComputeResult result = new ComputeResult("Data");
 
-        Assertions.assertDoesNotThrow(() -> {
-            api.readInputData(config);
-            api.writeData(config, result);
-        });
+    @Test
+    public void testStorage() {
+        DataStorageAPIImpl api = new DataStorageAPIImpl();
+
+        StorageConfig config = new StorageConfig("input", "output");
+        ComputeResult result = new ComputeResult("Prime result");
+
+        api.readInputData(config);
+        api.writeData(config, result);
+
+        Assertions.assertEquals(
+            "Prime result",
+            api.getLastResult().getOutput()
+        );
     }
 }

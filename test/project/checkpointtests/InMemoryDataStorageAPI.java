@@ -1,24 +1,18 @@
 package project.checkpointtests;
 
-import project.api.ComputeResult;
-import project.api.DataStorageAPI;
-import project.api.StorageConfig;
+import project.api.*;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
+
     private final InMemoryInputConfig inputConfig;
     private final InMemoryOutputConfig outputConfig;
 
-    public InMemoryDataStorageAPI(InMemoryInputConfig inputConfig, InMemoryOutputConfig outputConfig) {
+    public InMemoryDataStorageAPI(
+            InMemoryInputConfig inputConfig,
+            InMemoryOutputConfig outputConfig) {
+
         this.inputConfig = inputConfig;
         this.outputConfig = outputConfig;
-    }
-
-    public InMemoryInputConfig getInputConfig() {
-        return inputConfig;
-    }
-
-    public InMemoryOutputConfig getOutputConfig() {
-        return outputConfig;
     }
 
     @Override
@@ -27,5 +21,14 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 
     @Override
     public void writeData(StorageConfig config, ComputeResult result) {
+        outputConfig.addResult(result);
+    }
+
+    public InMemoryInputConfig getInputConfig() {
+        return inputConfig;
+    }
+
+    public InMemoryOutputConfig getOutputConfig() {
+        return outputConfig;
     }
 }

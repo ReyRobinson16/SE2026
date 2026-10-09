@@ -6,7 +6,8 @@ import project.annotations.ConceptualAPIPrototype;
 public class ComputationPrototype {
 
     @ConceptualAPIPrototype
-    public ComputeResult runPrototype(ComputationAPI api, ComputeRequest request) {
+    public ComputeResult prototypeMethod(ComputationAPI api) {
+        ComputeRequest request = null;
         return api.compute(request);
     }
 }
