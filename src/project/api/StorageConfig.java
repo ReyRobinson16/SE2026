@@ -7,5 +7,7 @@ public class StorageConfig {
         this.location = location;
     }
 
-    public String getLocation() { return location; }
+    public String getLocation() {
+        return location;
+    }
 }

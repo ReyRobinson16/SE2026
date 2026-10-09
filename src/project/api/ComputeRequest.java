@@ -7,5 +7,7 @@ public class ComputeRequest {
         this.inputNumber = inputNumber;
     }
 
-    public int getInputNumber() { return inputNumber; }
+    public int getInputNumber() {
+        return inputNumber;
+    }
 }

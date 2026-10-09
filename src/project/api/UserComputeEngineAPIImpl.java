@@ -14,8 +14,13 @@ public class UserComputeEngineAPIImpl implements UserComputeEngineAPI {
         this.dataStorageAPI = dataStorageAPI;
     }
 
-    public ComputationAPI getComputationAPI() { return computationAPI; }
-    public DataStorageAPI getDataStorageAPI() { return dataStorageAPI; }
+    public ComputationAPI getComputationAPI() {
+        return computationAPI;
+    }
+
+    public DataStorageAPI getDataStorageAPI() {
+        return dataStorageAPI;
+    }
 
     @Override
     public String configureJob(JobConfig config) {

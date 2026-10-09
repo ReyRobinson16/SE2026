@@ -11,7 +11,15 @@ public class JobConfig {
         this.delimiter = delimiter;
     }
 
-    public String getInputSource() { return inputSource; }
-    public String getOutputDestination() { return outputDestination; }
-    public char getDelimiter() { return delimiter; }
+    public String getInputSource() {
+        return inputSource;
+    }
+
+    public String getOutputDestination() {
+        return outputDestination;
+    }
+
+    public char getDelimiter() {
+        return delimiter;
+    }
 }

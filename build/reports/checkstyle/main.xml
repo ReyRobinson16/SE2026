@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="10.12.4">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/ConceptualAPIPrototype.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/NetworkAPIPrototype.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/NetworkAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/ConceptualAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/ProcessAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/annotations/ProcessAPIPrototype.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/ComputationAPIImpl.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/ComputationAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/UserComputeEngineAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/ComputeRequest.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/ComputationPrototype.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/JobConfig.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/DataStorageAPIImpl.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/StorageConfig.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/UserComputeEnginePrototype.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/UserComputeEngineAPIImpl.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/ComputeResult.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/JobManager.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/DataStorageAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/src/project/api/DataStoragePrototype.java">
+</file>
+</checkstyle>
