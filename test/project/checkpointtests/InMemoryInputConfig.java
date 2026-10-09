@@ -1,3 +1,5 @@
+package project.checkpointtests;
+
 import java.util.List;
 
 public class InMemoryInputConfig {

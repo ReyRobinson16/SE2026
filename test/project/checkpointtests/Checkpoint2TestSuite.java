@@ -1,3 +1,4 @@
+package project.checkpointtests;
 
 
 import java.lang.annotation.Annotation;
@@ -18,7 +19,6 @@ import project.annotations.NetworkAPI;
 import project.annotations.NetworkAPIPrototype;
 import project.annotations.ProcessAPI;
 import project.annotations.ProcessAPIPrototype;
-import project.checkpointtests.Utils;
 
 /**
  * This test checks that all 3 APIs exist in the 'src' folder as interfaces, with the appropriate annotations, and that they all

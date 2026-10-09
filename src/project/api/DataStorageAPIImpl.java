@@ -1,16 +1,11 @@
 package project.api;
 
-import java.util.Collections;
-import java.util.List;
-
 public class DataStorageAPIImpl implements DataStorageAPI {
-    @Override
-    public List<Integer> readInputData(String inputSource) {
-        return Collections.emptyList();
-    }
+    public DataStorageAPIImpl() {}
 
     @Override
-    public boolean writeData(String outputDestination, String resultData) {
-        return false;
-    }
+    public void readInputData(StorageConfig config) {}
+
+    @Override
+    public void writeData(StorageConfig config, ComputeResult result) {}
 }

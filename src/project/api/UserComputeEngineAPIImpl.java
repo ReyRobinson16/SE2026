@@ -5,8 +5,8 @@ public class UserComputeEngineAPIImpl implements UserComputeEngineAPI {
     private final DataStorageAPI dataStorageAPI;
 
     public UserComputeEngineAPIImpl() {
-        this.computationAPI = null;
-        this.dataStorageAPI = null;
+        this.computationAPI = new ComputationAPIImpl();
+        this.dataStorageAPI = new DataStorageAPIImpl();
     }
 
     public UserComputeEngineAPIImpl(ComputationAPI computationAPI, DataStorageAPI dataStorageAPI) {
@@ -14,23 +14,13 @@ public class UserComputeEngineAPIImpl implements UserComputeEngineAPI {
         this.dataStorageAPI = dataStorageAPI;
     }
 
-    public ComputationAPI getComputationAPI() {
-        return computationAPI;
-    }
-
-    public DataStorageAPI getDataStorageAPI() {
-        return dataStorageAPI;
-    }
+    public ComputationAPI getComputationAPI() { return computationAPI; }
+    public DataStorageAPI getDataStorageAPI() { return dataStorageAPI; }
 
     @Override
-    @SuppressWarnings("unused")
-    public String configureJob(String inputSource, String outputDestination, char delimiter) {
-        return "";
-    }
-
-    @Override
-    @SuppressWarnings("unused")
-    public String configureJob(String inputSource, String outputDestination) {
-        return "";
+    public String configureJob(JobConfig config) {
+        JobManager manager = new JobManager(computationAPI, dataStorageAPI);
+        manager.executeJob(config);
+        return "Job Configured: " + config.getInputSource();
     }
 }
