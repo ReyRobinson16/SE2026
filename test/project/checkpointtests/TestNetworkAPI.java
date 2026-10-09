@@ -2,7 +2,8 @@ package project.checkpointtests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import project.api.*;
+import project.api.JobConfig;
+import project.api.UserComputeEngineAPIImpl;
 
 public class TestNetworkAPI {
 

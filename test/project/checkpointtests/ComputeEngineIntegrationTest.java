@@ -3,7 +3,11 @@ package project.checkpointtests;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import project.api.*;
+import project.api.ComputationAPIImpl;
+import project.api.JobConfig;
+import project.api.JobManager;
+import project.api.StorageConfig;
+import project.api.UserComputeEngineAPIImpl;
 
 public class ComputeEngineIntegrationTest {
 
@@ -27,8 +31,8 @@ public class ComputeEngineIntegrationTest {
         JobConfig job = new JobConfig("input", "output");
 
         Assertions.assertEquals(
-            "input -> output",
-            network.configureJob(job)
+                "input -> output",
+                network.configureJob(job)
         );
 
         JobManager manager = new JobManager(computation, storage);
@@ -43,8 +47,8 @@ public class ComputeEngineIntegrationTest {
         Assertions.assertEquals(1, output.getResults().size());
 
         Assertions.assertEquals(
-            "100: largest_prime=97 total_primes=25",
-            output.getResults().get(0).getOutput()
+                "100: largest_prime=97 total_primes=25",
+                output.getResults().get(0).getOutput()
         );
     }
 }

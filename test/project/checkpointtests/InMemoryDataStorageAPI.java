@@ -1,6 +1,8 @@
 package project.checkpointtests;
 
-import project.api.*;
+import project.api.DataStorageAPI;
+import project.api.StorageConfig;
+import project.api.ComputeResult;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
 
@@ -20,7 +22,10 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
     }
 
     @Override
-    public void writeData(StorageConfig config, ComputeResult result) {
+    public void writeData(
+            StorageConfig config,
+            ComputeResult result) {
+
         outputConfig.addResult(result);
     }
 

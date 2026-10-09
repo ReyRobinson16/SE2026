@@ -6,6 +6,10 @@ public class ComputationAPIImpl implements ComputationAPI {
     public ComputeResult compute(ComputeRequest request) {
         int n = request.getInputNumber();
 
+        if (n < 1) {
+            throw new IllegalArgumentException("Input must be positive");
+        }
+
         int largestPrime = 0;
         int totalPrimes = 0;
 

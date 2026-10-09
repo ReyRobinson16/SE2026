@@ -2,7 +2,9 @@ package project.checkpointtests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import project.api.*;
+import project.api.DataStorageAPIImpl;
+import project.api.StorageConfig;
+import project.api.ComputeResult;
 
 public class TestProcessAPI {
 
@@ -10,15 +12,18 @@ public class TestProcessAPI {
     public void testStorage() {
         DataStorageAPIImpl api = new DataStorageAPIImpl();
 
-        StorageConfig config = new StorageConfig("input", "output");
-        ComputeResult result = new ComputeResult("Prime result");
+        StorageConfig config =
+                new StorageConfig("input", "output");
+
+        ComputeResult result =
+                new ComputeResult("Prime result");
 
         api.readInputData(config);
         api.writeData(config, result);
 
         Assertions.assertEquals(
-            "Prime result",
-            api.getLastResult().getOutput()
+                "Prime result",
+                api.getLastResult().getOutput()
         );
     }
 }

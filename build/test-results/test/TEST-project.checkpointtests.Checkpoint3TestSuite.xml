@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="project.checkpointtests.Checkpoint3TestSuite" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-09T02:44:53" hostname="Mac" time="0.098">
+<testsuite name="project.checkpointtests.Checkpoint3TestSuite" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-09T03:00:16" hostname="Mac" time="0.099">
   <properties/>
-  <testcase name="checkIntegrationTestStructure()" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.051"/>
-  <testcase name="[1] interface project.annotations.NetworkAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.002"/>
-  <testcase name="[2] interface project.annotations.ProcessAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.003"/>
-  <testcase name="[3] interface project.annotations.ConceptualAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.002"/>
-  <testcase name="[1] interface project.annotations.NetworkAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.003"/>
+  <testcase name="checkIntegrationTestStructure()" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.048"/>
+  <testcase name="[1] interface project.annotations.NetworkAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.004"/>
+  <testcase name="[2] interface project.annotations.ProcessAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.005"/>
+  <testcase name="[3] interface project.annotations.ConceptualAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.001"/>
+  <testcase name="[1] interface project.annotations.NetworkAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.005"/>
   <testcase name="[2] interface project.annotations.ProcessAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.006"/>
-  <testcase name="[3] interface project.annotations.ConceptualAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.003"/>
+  <testcase name="[3] interface project.annotations.ConceptualAPI" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.004"/>
   <testcase name="checkTestImplExists()" classname="project.checkpointtests.Checkpoint3TestSuite" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
