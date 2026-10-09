@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="10.12.4">
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/TestUserComputeEngineAPI.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/ComputeEngineIntegrationTest.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/checkpoints/Utils.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/TestUserComputeEngineAPI.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/Checkpoint2TestSuite.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/Checkpoint2TestSuite.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/TestDataStorageAPI.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/Utils.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/InMemoryInputConfig.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/TestDataStorageAPI.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/InMemoryOutputConfig.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/InMemoryInputConfig.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/TestComputationAPI.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/InMemoryOutputConfig.java">
 </file>
-<file name="/Users/reynaldorobinson/Downloads/SE2026/test/Checkpoint3TestSuite.java">
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/InMemoryDataStorageAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/TestComputationAPI.java">
+</file>
+<file name="/Users/reynaldorobinson/Downloads/SE2026/test/project/checkpointtests/Checkpoint3TestSuite.java">
 </file>
 </checkstyle>

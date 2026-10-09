@@ -1,11 +1,13 @@
 package project.api;
 
 public class ComputationAPIImpl implements ComputationAPI {
-    public ComputationAPIImpl() {}
+
+    public ComputationAPIImpl() {
+        // Public constructor for smoke test reflection
+    }
 
     @Override
     public ComputeResult compute(ComputeRequest request) {
-        int n = request.getInputNumber();
-        return new ComputeResult("Largest prime smaller than " + n);
+        return new ComputeResult("Computed: " + request.getInputNumber());
     }
 }

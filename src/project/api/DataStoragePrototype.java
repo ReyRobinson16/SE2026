@@ -6,7 +6,7 @@ import project.annotations.ProcessAPIPrototype;
 public class DataStoragePrototype {
 
     @ProcessAPIPrototype
-    public void prototypeMethod(DataStorageAPI api, StorageConfig config, ComputeResult result) {
+    public void runPrototype(DataStorageAPI api, StorageConfig config, ComputeResult result) {
         api.readInputData(config);
         api.writeData(config, result);
     }
