@@ -1,0 +1,21 @@
+package project.api;
+
+public class StorageConfig {
+
+    private final String inputSource;
+    private final String outputDestination;
+
+    public StorageConfig(String inputSource,
+                         String outputDestination) {
+        this.inputSource = inputSource;
+        this.outputDestination = outputDestination;
+    }
+
+    public String getInputSource() {
+        return inputSource;
+    }
+
+    public String getOutputDestination() {
+        return outputDestination;
+    }
+}

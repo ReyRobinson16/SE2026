@@ -1,36 +1,29 @@
 package project.api;
 
-public class UserComputeEngineAPIImpl implements UserComputeEngineAPI {
+public class UserComputeEngineAPIImpl
+        implements UserComputeEngineAPI {
+
     private final ComputationAPI computationAPI;
     private final DataStorageAPI dataStorageAPI;
 
     public UserComputeEngineAPIImpl() {
-        this.computationAPI = null;
-        this.dataStorageAPI = null;
+        this(new ComputationAPIImpl(),
+             new DataStorageAPIImpl());
     }
 
-    public UserComputeEngineAPIImpl(ComputationAPI computationAPI, DataStorageAPI dataStorageAPI) {
+    public UserComputeEngineAPIImpl(
+            ComputationAPI computationAPI,
+            DataStorageAPI dataStorageAPI) {
+
         this.computationAPI = computationAPI;
         this.dataStorageAPI = dataStorageAPI;
     }
 
-    public ComputationAPI getComputationAPI() {
-        return computationAPI;
-    }
-
-    public DataStorageAPI getDataStorageAPI() {
-        return dataStorageAPI;
-    }
-
     @Override
-    @SuppressWarnings("unused")
-    public String configureJob(String inputSource, String outputDestination, char delimiter) {
-        return "";
-    }
+    public String configureJob(JobConfig config) {
+        JobManager manager =
+                new JobManager(computationAPI, dataStorageAPI);
 
-    @Override
-    @SuppressWarnings("unused")
-    public String configureJob(String inputSource, String outputDestination) {
-        return "";
+        return manager.configureJob(config);
     }
 }
