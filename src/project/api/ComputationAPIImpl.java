@@ -1,9 +1,11 @@
+
 package project.api;
 
 public class ComputationAPIImpl implements ComputationAPI {
 
     @Override
     public ComputeResult compute(ComputeRequest request) {
+<<<<<<< Updated upstream
         int n = request.getInputNumber();
 
         if (n < 1) {
@@ -36,5 +38,9 @@ public class ComputationAPIImpl implements ComputationAPI {
                 + " total_primes=" + totalPrimes;
 
         return new ComputeResult(output);
+=======
+        // Checkpoint 3: Empty implementation
+        return null;
+>>>>>>> Stashed changes
     }
 }

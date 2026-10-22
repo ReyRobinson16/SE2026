@@ -1,3 +1,4 @@
+
 package project.api;
 
 public class JobManager {
@@ -5,12 +6,20 @@ public class JobManager {
     private final ComputationAPI computationAPI;
     private final DataStorageAPI dataStorageAPI;
 
+<<<<<<< Updated upstream
     public JobManager(ComputationAPI computationAPI,
                       DataStorageAPI dataStorageAPI) {
+=======
+    public JobManager(
+            ComputationAPI computationAPI,
+            DataStorageAPI dataStorageAPI) {
+
+>>>>>>> Stashed changes
         this.computationAPI = computationAPI;
         this.dataStorageAPI = dataStorageAPI;
     }
 
+<<<<<<< Updated upstream
     public String configureJob(JobConfig config) {
         if (config == null) {
             throw new IllegalArgumentException(
@@ -31,6 +40,22 @@ public class JobManager {
         ComputeResult result = computationAPI.compute(request);
 
         dataStorageAPI.writeData(config, result);
+=======
+    public ComputeResult executeJob(JobConfig jobConfig) {
+
+        StorageConfig storageConfig =
+                new StorageConfig(jobConfig.getInputSource());
+
+        dataStorageAPI.readInputData(storageConfig);
+
+        ComputeRequest request =
+                new ComputeRequest(100);
+
+        ComputeResult result =
+                computationAPI.compute(request);
+
+        dataStorageAPI.writeData(storageConfig, result);
+>>>>>>> Stashed changes
 
         return result;
     }

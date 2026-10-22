@@ -1,3 +1,4 @@
+
 package project.api;
 
 public class UserComputeEngineAPIImpl
@@ -21,9 +22,14 @@ public class UserComputeEngineAPIImpl
 
     @Override
     public String configureJob(JobConfig config) {
+<<<<<<< Updated upstream
         JobManager manager =
                 new JobManager(computationAPI, dataStorageAPI);
 
         return manager.configureJob(config);
+=======
+        // Empty implementation for Checkpoint 3
+        return null;
+>>>>>>> Stashed changes
     }
 }

@@ -1,6 +1,12 @@
+
 package project.api;
 
 public class StorageConfig {
+<<<<<<< Updated upstream
+=======
+
+    private final String location;
+>>>>>>> Stashed changes
 
     private final String inputSource;
     private final String outputDestination;

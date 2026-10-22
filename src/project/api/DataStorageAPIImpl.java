@@ -1,3 +1,4 @@
+
 package project.api;
 
 public class DataStorageAPIImpl implements DataStorageAPI {
@@ -6,16 +7,21 @@ public class DataStorageAPIImpl implements DataStorageAPI {
 
     @Override
     public void readInputData(StorageConfig config) {
+<<<<<<< Updated upstream
         if (config == null) {
             throw new IllegalArgumentException(
                 "Storage config cannot be null"
             );
         }
+=======
+        // Empty implementation
+>>>>>>> Stashed changes
     }
 
     @Override
     public void writeData(StorageConfig config,
                           ComputeResult result) {
+<<<<<<< Updated upstream
         if (config == null || result == null) {
             throw new IllegalArgumentException(
                 "Config and result are required"
@@ -23,6 +29,13 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
 
         lastResult = result;
+    }
+
+    public ComputeResult getLastResult() {
+        return lastResult;
+=======
+        // Empty implementation
+>>>>>>> Stashed changes
     }
 
     public ComputeResult getLastResult() {
