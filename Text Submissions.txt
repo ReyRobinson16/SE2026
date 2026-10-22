@@ -1,0 +1,4 @@
+Checkpoint 3
+a link to the latest commit on your main branch for this checkpoint- https://github.com/ReyRobinson16/SE2026/tree/7077d239bac4800ecb87d19c55770e142ba6b2cb
+a link to the pull request that you had your buddy review  - https://github.com/ReyRobinson16/SE2026/pull/42
+a link to the pull request that you reviewed for your buddy - https://github.com/CodeStrifeX/AliSEProject/pull/12#pullrequestreview-5512359298
