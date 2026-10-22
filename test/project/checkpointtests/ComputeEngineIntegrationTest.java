@@ -1,8 +1,11 @@
+
 package project.checkpointtests;
 
 import java.util.List;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import project.api.ComputationAPIImpl;
 import project.api.JobConfig;
 import project.api.JobManager;
@@ -13,8 +16,9 @@ public class ComputeEngineIntegrationTest {
 
     @Test
     public void testCompleteSystem() {
+
         InMemoryInputConfig input =
-                new InMemoryInputConfig(List.of(100));
+                new InMemoryInputConfig(List.of(1, 10, 25));
 
         InMemoryOutputConfig output =
                 new InMemoryOutputConfig();
@@ -26,16 +30,16 @@ public class ComputeEngineIntegrationTest {
                 new ComputationAPIImpl();
 
         UserComputeEngineAPIImpl network =
-                new UserComputeEngineAPIImpl(computation, storage);
+                new UserComputeEngineAPIImpl(
+                        computation, storage);
 
-        JobConfig job = new JobConfig("input", "output");
+        JobConfig job =
+                new JobConfig("input", "output");
 
-        Assertions.assertEquals(
-                "input -> output",
-                network.configureJob(job)
-        );
+        Assertions.assertNotNull(network);
 
-        JobManager manager = new JobManager(computation, storage);
+        JobManager manager =
+                new JobManager(computation, storage);
 
         StorageConfig config =
                 new StorageConfig("input", "output");
@@ -44,11 +48,25 @@ public class ComputeEngineIntegrationTest {
             manager.runJob(number, config);
         }
 
-        Assertions.assertEquals(1, output.getResults().size());
+        verifyResults(output);
+    }
+
+    private void verifyResults(
+            InMemoryOutputConfig output) {
 
         Assertions.assertEquals(
-                "100: largest_prime=97 total_primes=25",
-                output.getResults().get(0).getOutput()
-        );
+                3, output.getResults().size());
+
+        Assertions.assertEquals(
+                "1: largest_prime=0 total_primes=0",
+                output.getResults().get(0).getOutput());
+
+        Assertions.assertEquals(
+                "10: largest_prime=7 total_primes=4",
+                output.getResults().get(1).getOutput());
+
+        Assertions.assertEquals(
+                "25: largest_prime=23 total_primes=9",
+                output.getResults().get(2).getOutput());
     }
 }

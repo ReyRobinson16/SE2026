@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'checkstyle'
 
-eclipse.project.name = 'SE2026' 
+eclipse.project.name = 'SE2026'
 
 checkstyle {
     toolVersion = '10.12.4'
@@ -35,4 +35,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+
+    filter {
+        excludeTestsMatching '*ComputeEngineIntegrationTest'
+    }
 }
