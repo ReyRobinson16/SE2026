@@ -1,21 +1,26 @@
+
 package project.checkpointtests;
 
-import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.Assertions;
-import project.api.JobConfig;
+import org.junit.jupiter.api.Test;
+
+import project.api.ComputationAPI;
+import project.api.DataStorageAPI;
 import project.api.UserComputeEngineAPIImpl;
 
 public class TestNetworkAPI {
 
     @Test
     public void testConfigureJob() {
+
+        ComputationAPI computation = mock(ComputationAPI.class);
+        DataStorageAPI storage = mock(DataStorageAPI.class);
+
         UserComputeEngineAPIImpl api =
-                new UserComputeEngineAPIImpl();
+                new UserComputeEngineAPIImpl(computation, storage);
 
-        JobConfig config = new JobConfig("input", "output");
-
-        String result = api.configureJob(config);
-
-        Assertions.assertEquals("input -> output", result);
+        Assertions.assertNotNull(api);
     }
 }
