@@ -22,6 +22,12 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
 
         inputNumbers.clear();
+        if (config.getInputSource() == null
+        || config.getInputSource().isBlank()) {
+    throw new IllegalArgumentException(
+        "Input file path cannot be empty"
+    );
+}
 
         try {
             List<String> lines = Files.readAllLines(
