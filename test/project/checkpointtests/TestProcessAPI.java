@@ -1,7 +1,8 @@
 
 package project.checkpointtests;
 
-import static org.mockito.Mockito.mock;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,16 +14,44 @@ import project.api.ComputeResult;
 public class TestProcessAPI {
 
     @Test
-    public void testStorage() {
+    public void testStorage() throws Exception {
 
-        DataStorageAPIImpl api = new DataStorageAPIImpl();
+        Path input = Files.createTempFile("input", ".txt");
+        Path output = Files.createTempFile("output", ".txt");
 
-        StorageConfig config = mock(StorageConfig.class);
-        ComputeResult result = mock(ComputeResult.class);
+        try {
+            Files.writeString(input, "1\n10\n25");
 
-        api.readInputData(config);
-        api.writeData(config, result);
+            DataStorageAPIImpl api = new DataStorageAPIImpl();
 
-        Assertions.assertNotNull(api);
+            StorageConfig config = new StorageConfig(
+                input.toString(),
+                output.toString()
+            );
+
+            api.readInputData(config);
+
+            Assertions.assertEquals(
+                3,
+                api.getInputNumbers().size()
+            );
+
+            ComputeResult result = new ComputeResult(
+                "10: largest_prime=7 total_primes=4"
+            );
+
+            api.writeData(config, result);
+
+            Assertions.assertEquals(
+                result.getOutput(),
+                Files.readString(output)
+            );
+
+            Assertions.assertNotNull(api.getLastResult());
+
+        } finally {
+            Files.deleteIfExists(input);
+            Files.deleteIfExists(output);
+        }
     }
 }
