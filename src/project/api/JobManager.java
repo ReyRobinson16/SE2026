@@ -42,6 +42,11 @@ public class JobManager {
     }
 
     public void runFileJob(StorageConfig config) {
+        if (config == null) {
+    throw new IllegalArgumentException(
+        "Storage config cannot be null"
+    );
+}
         dataStorageAPI.readInputData(config);
 
         if (!(dataStorageAPI instanceof DataStorageAPIImpl)) {
