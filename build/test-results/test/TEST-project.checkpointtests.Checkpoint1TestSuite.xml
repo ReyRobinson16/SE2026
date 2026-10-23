@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="project.checkpointtests.Checkpoint1TestSuite" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-10-23T02:05:34" hostname="Mac" time="0.061">
+<testsuite name="project.checkpointtests.Checkpoint1TestSuite" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-10-23T02:45:08" hostname="Mac" time="0.126">
   <properties/>
-  <testcase name="testPullRequest()" classname="project.checkpointtests.Checkpoint1TestSuite" time="0.061">
+  <testcase name="testPullRequest()" classname="project.checkpointtests.Checkpoint1TestSuite" time="0.126">
     <failure message="java.lang.StringIndexOutOfBoundsException: begin 19, end 0, length 0" type="java.lang.StringIndexOutOfBoundsException">java.lang.StringIndexOutOfBoundsException: begin 19, end 0, length 0
 	at java.base/java.lang.String.checkBoundsBeginEnd(String.java:4606)
 	at java.base/java.lang.String.substring(String.java:2709)
