@@ -1,4 +1,10 @@
+
 package project.api;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
+import java.util.List;
 
 public class JobManager {
 
@@ -33,5 +39,36 @@ public class JobManager {
         dataStorageAPI.writeData(config, result);
 
         return result;
+    }
+
+    public void runFileJob(StorageConfig config) {
+        dataStorageAPI.readInputData(config);
+
+        if (!(dataStorageAPI instanceof DataStorageAPIImpl)) {
+            throw new IllegalStateException(
+                "File job requires DataStorageAPIImpl"
+            );
+        }
+
+        DataStorageAPIImpl storage =
+                (DataStorageAPIImpl) dataStorageAPI;
+
+        List<Integer> numbers = storage.getInputNumbers();
+
+        try {
+            Files.deleteIfExists(
+                Path.of(config.getOutputDestination())
+            );
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                "Unable to reset output file", e
+            );
+        }
+
+        for (int number : numbers) {
+            ComputeRequest request = new ComputeRequest(number);
+            ComputeResult result = computationAPI.compute(request);
+            dataStorageAPI.writeData(config, result);
+        }
     }
 }
