@@ -1,3 +1,4 @@
+
 package project.api;
 
 import project.annotations.NetworkAPIPrototype;
@@ -7,7 +8,7 @@ public class UserComputeEnginePrototype {
 
     @NetworkAPIPrototype
     public String prototypeMethod(UserComputeEngineAPI api) {
-        JobConfig config = null;
+        JobConfig config = new JobConfig("input.txt", "output.txt");
         return api.configureJob(config);
     }
 }

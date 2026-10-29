@@ -4,7 +4,6 @@ package project.api;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
-import java.util.List;
 
 public class JobManager {
 
@@ -18,19 +17,12 @@ public class JobManager {
     }
 
     public String configureJob(JobConfig config) {
-        if (config == null) {
-            throw new IllegalArgumentException(
-                "Job config cannot be null"
-            );
-        }
-
         return config.getInputSource()
                 + " -> "
                 + config.getOutputDestination();
     }
 
-    public ComputeResult runJob(int number,
-                                StorageConfig config) {
+    public ComputeResult runJob(int number, StorageConfig config) {
         dataStorageAPI.readInputData(config);
 
         ComputeRequest request = new ComputeRequest(number);
@@ -42,35 +34,16 @@ public class JobManager {
     }
 
     public void runFileJob(StorageConfig config) {
-        if (config == null) {
-    throw new IllegalArgumentException(
-        "Storage config cannot be null"
-    );
-}
-        dataStorageAPI.readInputData(config);
 
-        if (!(dataStorageAPI instanceof DataStorageAPIImpl)) {
-            throw new IllegalStateException(
-                "File job requires DataStorageAPIImpl"
-            );
-        }
-
-        DataStorageAPIImpl storage =
-                (DataStorageAPIImpl) dataStorageAPI;
-
-        List<Integer> numbers = storage.getInputNumbers();
+        InputData inputData = dataStorageAPI.readInputData(config);
 
         try {
-            Files.deleteIfExists(
-                Path.of(config.getOutputDestination())
-            );
+            Files.deleteIfExists(Path.of(config.getOutputDestination()));
         } catch (IOException e) {
-            throw new IllegalStateException(
-                "Unable to reset output file", e
-            );
+            throw new IllegalStateException("Unable to reset output file", e);
         }
 
-        for (int number : numbers) {
+        for (int number : inputData.getNumbers()) {
             ComputeRequest request = new ComputeRequest(number);
             ComputeResult result = computationAPI.compute(request);
             dataStorageAPI.writeData(config, result);

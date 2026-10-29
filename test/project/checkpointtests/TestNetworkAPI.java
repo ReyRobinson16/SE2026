@@ -2,6 +2,7 @@
 package project.checkpointtests;
 
 import static org.mockito.Mockito.mock;
+import project.api.JobConfig;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ public class TestNetworkAPI {
         UserComputeEngineAPIImpl api =
                 new UserComputeEngineAPIImpl(computation, storage);
 
-        Assertions.assertNotNull(api);
+        Assertions.assertEquals("input.txt -> output.txt",
+                api.configureJob(new JobConfig("input.txt", "output.txt")));
     }
 }
