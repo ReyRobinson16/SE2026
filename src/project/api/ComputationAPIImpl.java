@@ -10,10 +10,13 @@ public class ComputationAPIImpl implements ComputationAPI {
         int largestPrime = 0;
         int totalPrimes = 0;
 
-        for (int i = 2; i < number; i++) {
+        for (int i = 2; i <= number; i++) {
             if (isPrime(i)) {
-                largestPrime = i;
                 totalPrimes++;
+
+                if (i < number) {
+                    largestPrime = i;
+                }
             }
         }
 
