@@ -1,8 +1,11 @@
+
 package project.checkpointtests;
 
+import java.util.ArrayList;
 import project.api.DataStorageAPI;
 import project.api.StorageConfig;
 import project.api.ComputeResult;
+import project.api.InputData;
 
 public class InMemoryDataStorageAPI implements DataStorageAPI {
 
@@ -18,7 +21,8 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
     }
 
     @Override
-    public void readInputData(StorageConfig config) {
+    public InputData readInputData(StorageConfig config) {
+        return new InputData(new ArrayList<>());
     }
 
     @Override

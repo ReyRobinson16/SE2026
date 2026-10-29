@@ -14,7 +14,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     private final List<Integer> inputNumbers = new ArrayList<>();
 
     @Override
-    public void readInputData(StorageConfig config) {
+    public InputData readInputData(StorageConfig config) {
+
         if (config == null) {
             throw new IllegalArgumentException(
                 "Storage config cannot be null"
@@ -22,12 +23,6 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
 
         inputNumbers.clear();
-        if (config.getInputSource() == null
-        || config.getInputSource().isBlank()) {
-    throw new IllegalArgumentException(
-        "Input file path cannot be empty"
-    );
-}
 
         try {
             List<String> lines = Files.readAllLines(
@@ -41,23 +36,25 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                     }
                 }
             }
+
         } catch (IOException e) {
             throw new IllegalStateException(
                 "Unable to read input file", e
             );
         }
+
+        return new InputData(new ArrayList<>(inputNumbers));
     }
 
     @Override
     public void writeData(StorageConfig config,
                           ComputeResult result) {
+
         if (config == null || result == null) {
             throw new IllegalArgumentException(
                 "Config and result are required"
             );
         }
-
-        lastResult = result;
 
         try {
             Path outputPath = Path.of(
@@ -77,6 +74,9 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
             );
+
+            lastResult = result;
+
         } catch (IOException e) {
             throw new IllegalStateException(
                 "Unable to write output file", e
