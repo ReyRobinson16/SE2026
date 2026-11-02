@@ -35,8 +35,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-
-    filter {
-        excludeTestsMatching '*ComputeEngineIntegrationTest'
-    }
 }

@@ -1,3 +1,4 @@
+
 package project.api;
 
 public class UserComputeEngineAPIImpl
@@ -25,5 +26,20 @@ public class UserComputeEngineAPIImpl
                 new JobManager(computationAPI, dataStorageAPI);
 
         return manager.configureJob(config);
+    }
+
+    @Override
+    public String startJob(JobConfig config) {
+        JobManager manager =
+                new JobManager(computationAPI, dataStorageAPI);
+
+        StorageConfig storageConfig = new StorageConfig(
+                config.getInputSource(),
+                config.getOutputDestination()
+        );
+
+        manager.runFileJob(storageConfig);
+
+        return "Job completed";
     }
 }
