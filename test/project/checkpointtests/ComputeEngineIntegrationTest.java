@@ -6,10 +6,11 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import project.api.ComputationAPI;
 import project.api.ComputationAPIImpl;
+import project.api.ComputeRequest;
+import project.api.ComputeResult;
 import project.api.JobConfig;
-import project.api.JobManager;
-import project.api.StorageConfig;
 import project.api.UserComputeEngineAPIImpl;
 
 public class ComputeEngineIntegrationTest {
@@ -36,19 +37,46 @@ public class ComputeEngineIntegrationTest {
         JobConfig job =
                 new JobConfig("input", "output");
 
-        Assertions.assertNotNull(network);
-
-        JobManager manager =
-                new JobManager(computation, storage);
-
-        StorageConfig config =
-                new StorageConfig("input", "output");
-
-        for (int number : input.getInputs()) {
-            manager.runJob(number, config);
-        }
+        Assertions.assertEquals(
+                "Job completed", network.startJob(job));
 
         verifyResults(output);
+    }
+
+    @Test
+    public void testExceptionReturnsErrorMessage() {
+
+        InMemoryInputConfig input =
+                new InMemoryInputConfig(List.of(5));
+
+        InMemoryOutputConfig output =
+                new InMemoryOutputConfig();
+
+        InMemoryDataStorageAPI storage =
+                new InMemoryDataStorageAPI(input, output);
+
+        ComputationAPI failingComputation =
+                new ComputationAPI() {
+                    @Override
+                    public ComputeResult compute(
+                            ComputeRequest request) {
+                        throw new IllegalStateException(
+                                "integration test failure");
+                    }
+                };
+
+        UserComputeEngineAPIImpl network =
+                new UserComputeEngineAPIImpl(
+                        failingComputation, storage);
+
+        JobConfig job =
+                new JobConfig("input", "output");
+
+        String response = network.startJob(job);
+
+        Assertions.assertEquals(
+                "ERROR: integration test failure",
+                response);
     }
 
     private void verifyResults(

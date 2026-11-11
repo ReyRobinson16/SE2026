@@ -16,8 +16,11 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public InputData readInputData(StorageConfig config) {
 
-        if (config == null || config.getInputSource() == null) {
-            throw new IllegalArgumentException("Invalid storage config");
+        if (config == null
+                || config.getInputSource() == null
+                || config.getInputSource().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Invalid input file path");
         }
 
         inputNumbers.clear();
@@ -35,7 +38,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             }
 
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to read input file", e);
+            throw new IllegalStateException(
+                    "Unable to read input file", e);
         }
 
         return new InputData(new ArrayList<>(inputNumbers));
@@ -44,30 +48,43 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public void clearOutput(StorageConfig config) {
 
-        if (config == null || config.getOutputDestination() == null) {
-            throw new IllegalArgumentException("Invalid storage config");
+        if (config == null
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Invalid output file path");
         }
 
         try {
-            Files.deleteIfExists(Path.of(config.getOutputDestination()));
+            Files.deleteIfExists(
+                    Path.of(config.getOutputDestination()));
+
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to clear output file", e);
+            throw new IllegalStateException(
+                    "Unable to clear output file", e);
         }
     }
 
     @Override
     public void writeData(StorageConfig config, ComputeResult result) {
 
-        if (config == null || result == null) {
-            throw new IllegalArgumentException("Config and result are required");
+        if (config == null
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()
+                || result == null
+                || result.getOutput() == null) {
+            throw new IllegalArgumentException(
+                    "Invalid output configuration or result");
         }
 
         try {
-            Path outputPath = Path.of(config.getOutputDestination());
+            Path outputPath =
+                    Path.of(config.getOutputDestination());
 
             String output = result.getOutput();
 
-            if (Files.exists(outputPath) && Files.size(outputPath) > 0) {
+            if (Files.exists(outputPath)
+                    && Files.size(outputPath) > 0) {
                 output = "," + output;
             }
 
@@ -80,7 +97,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             lastResult = result;
 
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to write output file", e);
+            throw new IllegalStateException(
+                    "Unable to write output file", e);
         }
     }
 

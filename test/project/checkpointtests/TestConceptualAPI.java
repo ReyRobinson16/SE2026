@@ -26,4 +26,15 @@ public class TestConceptualAPI {
             result.getOutput()
         );
     }
+
+    @Test
+    public void testNullRequestValidation() {
+
+        ComputationAPIImpl api = new ComputationAPIImpl();
+
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> api.compute(null)
+        );
+    }
 }

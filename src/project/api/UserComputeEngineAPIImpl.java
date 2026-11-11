@@ -28,35 +28,51 @@ public class UserComputeEngineAPIImpl
     @Override
     public String configureJob(JobConfig config) {
 
-        if (config == null) {
-            throw new IllegalArgumentException(
-                    "Job config cannot be null");
+        try {
+            JobManager manager =
+                    new JobManager(computationAPI, dataStorageAPI);
+
+            return manager.configureJob(config);
+
+        } catch (RuntimeException e) {
+            return getErrorMessage(e);
         }
-
-        JobManager manager =
-                new JobManager(computationAPI, dataStorageAPI);
-
-        return manager.configureJob(config);
     }
 
     @Override
     public String startJob(JobConfig config) {
 
-        if (config == null) {
-            throw new IllegalArgumentException(
-                    "Job config cannot be null");
+        try {
+            JobManager manager =
+                    new JobManager(computationAPI, dataStorageAPI);
+
+            if (config == null) {
+                throw new IllegalArgumentException(
+                        "Job config cannot be null");
+            }
+
+            StorageConfig storageConfig = new StorageConfig(
+                    config.getInputSource(),
+                    config.getOutputDestination()
+            );
+
+            manager.runFileJob(storageConfig);
+
+            return "Job completed";
+
+        } catch (RuntimeException e) {
+            return getErrorMessage(e);
+        }
+    }
+
+    private String getErrorMessage(RuntimeException e) {
+
+        String message = e.getMessage();
+
+        if (message == null || message.isEmpty()) {
+            message = e.getClass().getSimpleName();
         }
 
-        JobManager manager =
-                new JobManager(computationAPI, dataStorageAPI);
-
-        StorageConfig storageConfig = new StorageConfig(
-                config.getInputSource(),
-                config.getOutputDestination()
-        );
-
-        manager.runFileJob(storageConfig);
-
-        return "Job completed";
+        return "ERROR: " + message;
     }
 }
