@@ -16,18 +16,15 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public InputData readInputData(StorageConfig config) {
 
-        if (config == null) {
-            throw new IllegalArgumentException(
-                "Storage config cannot be null"
-            );
+        if (config == null || config.getInputSource() == null) {
+            throw new IllegalArgumentException("Invalid storage config");
         }
 
         inputNumbers.clear();
 
         try {
             List<String> lines = Files.readAllLines(
-                Path.of(config.getInputSource())
-            );
+                    Path.of(config.getInputSource()));
 
             for (String line : lines) {
                 for (String value : line.split("[,\\s]+")) {
@@ -38,49 +35,52 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             }
 
         } catch (IOException e) {
-            throw new IllegalStateException(
-                "Unable to read input file", e
-            );
+            throw new IllegalStateException("Unable to read input file", e);
         }
 
         return new InputData(new ArrayList<>(inputNumbers));
     }
 
     @Override
-    public void writeData(StorageConfig config,
-                          ComputeResult result) {
+    public void clearOutput(StorageConfig config) {
 
-        if (config == null || result == null) {
-            throw new IllegalArgumentException(
-                "Config and result are required"
-            );
+        if (config == null || config.getOutputDestination() == null) {
+            throw new IllegalArgumentException("Invalid storage config");
         }
 
         try {
-            Path outputPath = Path.of(
-                config.getOutputDestination()
-            );
+            Files.deleteIfExists(Path.of(config.getOutputDestination()));
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to clear output file", e);
+        }
+    }
+
+    @Override
+    public void writeData(StorageConfig config, ComputeResult result) {
+
+        if (config == null || result == null) {
+            throw new IllegalArgumentException("Config and result are required");
+        }
+
+        try {
+            Path outputPath = Path.of(config.getOutputDestination());
 
             String output = result.getOutput();
 
-            if (Files.exists(outputPath)
-                    && Files.size(outputPath) > 0) {
+            if (Files.exists(outputPath) && Files.size(outputPath) > 0) {
                 output = "," + output;
             }
 
             Files.writeString(
-                outputPath,
-                output,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-            );
+                    outputPath,
+                    output,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND);
 
             lastResult = result;
 
         } catch (IOException e) {
-            throw new IllegalStateException(
-                "Unable to write output file", e
-            );
+            throw new IllegalStateException("Unable to write output file", e);
         }
     }
 

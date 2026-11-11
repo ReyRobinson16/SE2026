@@ -6,12 +6,12 @@ public class JobManager {
     private final ComputationAPI computationAPI;
     private final DataStorageAPI dataStorageAPI;
 
-    public JobManager(ComputationAPI computationAPI,
-                      DataStorageAPI dataStorageAPI) {
+    public JobManager(
+            ComputationAPI computationAPI,
+            DataStorageAPI dataStorageAPI) {
 
         if (computationAPI == null || dataStorageAPI == null) {
-            throw new IllegalArgumentException(
-                    "APIs cannot be null");
+            throw new IllegalArgumentException("APIs cannot be null");
         }
 
         this.computationAPI = computationAPI;
@@ -20,18 +20,10 @@ public class JobManager {
 
     public String configureJob(JobConfig config) {
 
-        if (config == null) {
-            throw new IllegalArgumentException(
-                    "Job config cannot be null");
-        }
-
-        if (config.getInputSource() == null
-                || config.getInputSource().isBlank()
-                || config.getOutputDestination() == null
-                || config.getOutputDestination().isBlank()) {
-
-            throw new IllegalArgumentException(
-                    "Input and output paths are required");
+        if (config == null
+                || config.getInputSource() == null
+                || config.getOutputDestination() == null) {
+            throw new IllegalArgumentException("Invalid job config");
         }
 
         return config.getInputSource()
@@ -42,14 +34,11 @@ public class JobManager {
     public ComputeResult runJob(int number, StorageConfig config) {
 
         if (config == null) {
-            throw new IllegalArgumentException(
-                    "Storage config cannot be null");
+            throw new IllegalArgumentException("Config cannot be null");
         }
 
-        dataStorageAPI.readInputData(config);
-
-        ComputeRequest request = new ComputeRequest(number);
-        ComputeResult result = computationAPI.compute(request);
+        ComputeResult result =
+                computationAPI.compute(new ComputeRequest(number));
 
         dataStorageAPI.writeData(config, result);
 
@@ -59,20 +48,21 @@ public class JobManager {
     public void runFileJob(StorageConfig config) {
 
         if (config == null) {
-            throw new IllegalArgumentException(
-                    "Storage config cannot be null");
+            throw new IllegalArgumentException("Config cannot be null");
         }
 
         InputData inputData = dataStorageAPI.readInputData(config);
 
         if (inputData == null || inputData.getNumbers() == null) {
-            throw new IllegalArgumentException(
-                    "Input data cannot be null");
+            throw new IllegalArgumentException("Input data cannot be null");
         }
 
+        dataStorageAPI.clearOutput(config);
+
         for (int number : inputData.getNumbers()) {
-            ComputeRequest request = new ComputeRequest(number);
-            ComputeResult result = computationAPI.compute(request);
+            ComputeResult result =
+                    computationAPI.compute(new ComputeRequest(number));
+
             dataStorageAPI.writeData(config, result);
         }
     }
