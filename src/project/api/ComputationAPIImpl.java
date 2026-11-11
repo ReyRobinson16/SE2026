@@ -6,6 +6,11 @@ public class ComputationAPIImpl implements ComputationAPI {
     @Override
     public ComputeResult compute(ComputeRequest request) {
 
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "Compute request cannot be null");
+        }
+
         int number = request.getInputNumber();
         int largestPrime = 0;
         int totalPrimes = 0;

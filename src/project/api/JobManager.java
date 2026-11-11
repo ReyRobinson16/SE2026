@@ -1,10 +1,6 @@
 
 package project.api;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.IOException;
-
 public class JobManager {
 
     private final ComputationAPI computationAPI;
@@ -12,17 +8,44 @@ public class JobManager {
 
     public JobManager(ComputationAPI computationAPI,
                       DataStorageAPI dataStorageAPI) {
+
+        if (computationAPI == null || dataStorageAPI == null) {
+            throw new IllegalArgumentException(
+                    "APIs cannot be null");
+        }
+
         this.computationAPI = computationAPI;
         this.dataStorageAPI = dataStorageAPI;
     }
 
     public String configureJob(JobConfig config) {
+
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Job config cannot be null");
+        }
+
+        if (config.getInputSource() == null
+                || config.getInputSource().isBlank()
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()) {
+
+            throw new IllegalArgumentException(
+                    "Input and output paths are required");
+        }
+
         return config.getInputSource()
                 + " -> "
                 + config.getOutputDestination();
     }
 
     public ComputeResult runJob(int number, StorageConfig config) {
+
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Storage config cannot be null");
+        }
+
         dataStorageAPI.readInputData(config);
 
         ComputeRequest request = new ComputeRequest(number);
@@ -35,12 +58,16 @@ public class JobManager {
 
     public void runFileJob(StorageConfig config) {
 
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Storage config cannot be null");
+        }
+
         InputData inputData = dataStorageAPI.readInputData(config);
 
-        try {
-            Files.deleteIfExists(Path.of(config.getOutputDestination()));
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to reset output file", e);
+        if (inputData == null || inputData.getNumbers() == null) {
+            throw new IllegalArgumentException(
+                    "Input data cannot be null");
         }
 
         for (int number : inputData.getNumbers()) {
