@@ -2,6 +2,7 @@
 package project.checkpointtests;
 
 import java.util.ArrayList;
+
 import project.api.DataStorageAPI;
 import project.api.StorageConfig;
 import project.api.ComputeResult;
@@ -22,15 +23,17 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
 
     @Override
     public InputData readInputData(StorageConfig config) {
-        return new InputData(new ArrayList<>());
+        return new InputData(new ArrayList<>(inputConfig.getInputs()));
     }
 
     @Override
-    public void writeData(
-            StorageConfig config,
-            ComputeResult result) {
-
+    public void writeData(StorageConfig config, ComputeResult result) {
         outputConfig.addResult(result);
+    }
+
+    @Override
+    public void clearOutput(StorageConfig config) {
+        outputConfig.getResults().clear();
     }
 
     public InMemoryInputConfig getInputConfig() {

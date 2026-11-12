@@ -16,12 +16,23 @@ public class UserComputeEngineAPIImpl
             ComputationAPI computationAPI,
             DataStorageAPI dataStorageAPI) {
 
+        if (computationAPI == null || dataStorageAPI == null) {
+            throw new IllegalArgumentException(
+                    "APIs cannot be null");
+        }
+
         this.computationAPI = computationAPI;
         this.dataStorageAPI = dataStorageAPI;
     }
 
     @Override
     public String configureJob(JobConfig config) {
+
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Job config cannot be null");
+        }
+
         JobManager manager =
                 new JobManager(computationAPI, dataStorageAPI);
 
@@ -30,6 +41,12 @@ public class UserComputeEngineAPIImpl
 
     @Override
     public String startJob(JobConfig config) {
+
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Job config cannot be null");
+        }
+
         JobManager manager =
                 new JobManager(computationAPI, dataStorageAPI);
 

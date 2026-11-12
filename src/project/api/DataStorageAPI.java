@@ -9,4 +9,6 @@ public interface DataStorageAPI {
     InputData readInputData(StorageConfig config);
 
     void writeData(StorageConfig config, ComputeResult result);
+
+    void clearOutput(StorageConfig config);
 }
