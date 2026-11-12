@@ -53,7 +53,9 @@ public class JobManager {
                 config.getOutputDestination()
         ));
 
-        dataStorageAPI.clearOutput(config);
+        String clearStatus = dataStorageAPI.clearOutput(config);
+
+        checkStorageStatus(clearStatus);
 
         InputData inputData =
                 dataStorageAPI.readInputData(config);
@@ -81,7 +83,20 @@ public class JobManager {
                         "Computation returned no result");
             }
 
-            dataStorageAPI.writeData(config, result);
+            String writeStatus =
+                    dataStorageAPI.writeData(config, result);
+
+            checkStorageStatus(writeStatus);
+        }
+    }
+
+    private void checkStorageStatus(String status) {
+
+        if (!"SUCCESS".equals(status)) {
+            throw new IllegalStateException(
+                    status == null
+                            ? "Storage operation failed"
+                            : status);
         }
     }
 

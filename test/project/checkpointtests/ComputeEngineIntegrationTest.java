@@ -11,6 +11,7 @@ import project.api.ComputationAPIImpl;
 import project.api.ComputeRequest;
 import project.api.ComputeResult;
 import project.api.JobConfig;
+import project.api.StorageConfig;
 import project.api.UserComputeEngineAPIImpl;
 
 public class ComputeEngineIntegrationTest {
@@ -57,9 +58,11 @@ public class ComputeEngineIntegrationTest {
 
         ComputationAPI failingComputation =
                 new ComputationAPI() {
+
                     @Override
                     public ComputeResult compute(
                             ComputeRequest request) {
+
                         throw new IllegalStateException(
                                 "integration test failure");
                     }
@@ -77,6 +80,42 @@ public class ComputeEngineIntegrationTest {
         Assertions.assertEquals(
                 "ERROR: integration test failure",
                 response);
+    }
+
+    @Test
+    public void testStorageErrorReturnsErrorMessage() {
+
+        InMemoryInputConfig input =
+                new InMemoryInputConfig(List.of(5));
+
+        InMemoryOutputConfig output =
+                new InMemoryOutputConfig();
+
+        InMemoryDataStorageAPI storage =
+                new InMemoryDataStorageAPI(input, output) {
+
+                    @Override
+                    public String clearOutput(
+                            StorageConfig config) {
+
+                        return "ERROR: Storage failure";
+                    }
+                };
+
+        UserComputeEngineAPIImpl network =
+                new UserComputeEngineAPIImpl(
+                        new ComputationAPIImpl(), storage);
+
+        JobConfig job =
+                new JobConfig("input", "output");
+
+        String response = network.startJob(job);
+
+        Assertions.assertTrue(
+                response.startsWith("ERROR:"));
+
+        Assertions.assertFalse(
+                response.equals("Job completed"));
     }
 
     private void verifyResults(

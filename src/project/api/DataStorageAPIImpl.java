@@ -16,14 +16,13 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public InputData readInputData(StorageConfig config) {
 
+        inputNumbers.clear();
+
         if (config == null
                 || config.getInputSource() == null
                 || config.getInputSource().isBlank()) {
-            throw new IllegalArgumentException(
-                    "Invalid input file path");
+            return null;
         }
-
-        inputNumbers.clear();
 
         try {
             List<String> lines = Files.readAllLines(
@@ -37,36 +36,36 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 }
             }
 
-        } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Unable to read input file", e);
-        }
+            return new InputData(new ArrayList<>(inputNumbers));
 
-        return new InputData(new ArrayList<>(inputNumbers));
+        } catch (IOException | RuntimeException e) {
+            inputNumbers.clear();
+            return null;
+        }
     }
 
     @Override
-    public void clearOutput(StorageConfig config) {
+    public String clearOutput(StorageConfig config) {
 
         if (config == null
                 || config.getOutputDestination() == null
                 || config.getOutputDestination().isBlank()) {
-            throw new IllegalArgumentException(
-                    "Invalid output file path");
+            return "ERROR: Invalid output file path";
         }
 
         try {
             Files.deleteIfExists(
                     Path.of(config.getOutputDestination()));
 
-        } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Unable to clear output file", e);
+            return "SUCCESS";
+
+        } catch (IOException | RuntimeException e) {
+            return "ERROR: Unable to clear output file";
         }
     }
 
     @Override
-    public void writeData(
+    public String writeData(
             StorageConfig config,
             ComputeResult result) {
 
@@ -75,8 +74,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 || config.getOutputDestination().isBlank()
                 || result == null
                 || result.getOutput() == null) {
-            throw new IllegalArgumentException(
-                    "Invalid output configuration or result");
+            return "ERROR: Invalid output configuration or result";
         }
 
         try {
@@ -98,9 +96,10 @@ public class DataStorageAPIImpl implements DataStorageAPI {
 
             lastResult = result;
 
-        } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Unable to write output file", e);
+            return "SUCCESS";
+
+        } catch (IOException | RuntimeException e) {
+            return "ERROR: Unable to write output file";
         }
     }
 
