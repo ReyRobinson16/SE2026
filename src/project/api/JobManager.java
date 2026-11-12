@@ -11,7 +11,8 @@ public class JobManager {
             DataStorageAPI dataStorageAPI) {
 
         if (computationAPI == null || dataStorageAPI == null) {
-            throw new IllegalArgumentException("APIs cannot be null");
+            throw new IllegalArgumentException(
+                    "APIs cannot be null");
         }
 
         this.computationAPI = computationAPI;
@@ -20,46 +21,41 @@ public class JobManager {
 
     public String configureJob(JobConfig config) {
 
-        if (config == null
-                || config.getInputSource() == null
-                || config.getInputSource().isBlank()
-                || config.getOutputDestination() == null
-                || config.getOutputDestination().isBlank()) {
-            throw new IllegalArgumentException("Invalid job config");
-        }
-
-        return config.getInputSource()
-                + " -> "
-                + config.getOutputDestination();
-    }
-
-    public ComputeResult runJob(int number, StorageConfig config) {
-
         validateStorageConfig(config);
 
-        // Any integer is allowed as a computation input.
-        ComputeResult result =
-                computationAPI.compute(new ComputeRequest(number));
+        return "Job configured";
+    }
+
+    public void runJob(ComputeRequest request) {
+
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "Compute request cannot be null");
+        }
+
+        ComputeResult result = computationAPI.compute(request);
 
         if (result == null) {
             throw new IllegalStateException(
                     "Computation returned no result");
         }
-
-        dataStorageAPI.writeData(config, result);
-
-        return result;
     }
 
     public void runFileJob(StorageConfig config) {
 
         validateStorageConfig(config);
 
-        InputData inputData = dataStorageAPI.readInputData(config);
+        String clearStatus =
+                dataStorageAPI.clearOutput(config);
+
+        checkStorageStatus(clearStatus);
+
+        InputData inputData =
+                dataStorageAPI.readInputData(config);
 
         if (inputData == null || inputData.getNumbers() == null) {
-            throw new IllegalArgumentException(
-                    "Input data cannot be null");
+            throw new IllegalStateException(
+                    "Input data is invalid");
         }
 
         for (Integer number : inputData.getNumbers()) {
@@ -69,19 +65,46 @@ public class JobManager {
             }
         }
 
-        dataStorageAPI.clearOutput(config);
-
         for (Integer number : inputData.getNumbers()) {
 
+            ComputeRequest request =
+                    new ComputeRequest(number);
+
             ComputeResult result =
-                    computationAPI.compute(new ComputeRequest(number));
+                    computationAPI.compute(request);
 
             if (result == null) {
                 throw new IllegalStateException(
                         "Computation returned no result");
             }
 
-            dataStorageAPI.writeData(config, result);
+            String writeStatus =
+                    dataStorageAPI.writeData(config, result);
+
+            checkStorageStatus(writeStatus);
+        }
+    }
+
+    private void checkStorageStatus(String status) {
+
+        if (!"SUCCESS".equals(status)) {
+            throw new IllegalStateException(
+                    status == null
+                            ? "Storage operation failed"
+                            : status);
+        }
+    }
+
+    private void validateStorageConfig(JobConfig config) {
+
+        if (config == null
+                || config.getInputSource() == null
+                || config.getInputSource().isBlank()
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()) {
+
+            throw new IllegalArgumentException(
+                    "Invalid storage configuration");
         }
     }
 
@@ -92,6 +115,7 @@ public class JobManager {
                 || config.getInputSource().isBlank()
                 || config.getOutputDestination() == null
                 || config.getOutputDestination().isBlank()) {
+
             throw new IllegalArgumentException(
                     "Invalid storage configuration");
         }
