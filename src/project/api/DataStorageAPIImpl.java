@@ -73,7 +73,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
                 || config.getOutputDestination() == null
                 || config.getOutputDestination().isBlank()
                 || result == null
-                || result.getOutput() == null) {
+                || result.getOutput() == null
+                || result.getOutput().isBlank()) {
             return "ERROR: Invalid output configuration or result";
         }
 

@@ -43,17 +43,10 @@ public class JobManager {
 
     public void runFileJob(StorageConfig config) {
 
-        if (config == null) {
-            throw new IllegalArgumentException(
-                    "Storage config cannot be null");
-        }
+        validateStorageConfig(config);
 
-        validateStorageConfig(new JobConfig(
-                config.getInputSource(),
-                config.getOutputDestination()
-        ));
-
-        String clearStatus = dataStorageAPI.clearOutput(config);
+        String clearStatus =
+                dataStorageAPI.clearOutput(config);
 
         checkStorageStatus(clearStatus);
 
@@ -66,11 +59,13 @@ public class JobManager {
         }
 
         for (Integer number : inputData.getNumbers()) {
-
             if (number == null) {
                 throw new IllegalArgumentException(
                         "Input data cannot contain null numbers");
             }
+        }
+
+        for (Integer number : inputData.getNumbers()) {
 
             ComputeRequest request =
                     new ComputeRequest(number);
@@ -101,6 +96,19 @@ public class JobManager {
     }
 
     private void validateStorageConfig(JobConfig config) {
+
+        if (config == null
+                || config.getInputSource() == null
+                || config.getInputSource().isBlank()
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()) {
+
+            throw new IllegalArgumentException(
+                    "Invalid storage configuration");
+        }
+    }
+
+    private void validateStorageConfig(StorageConfig config) {
 
         if (config == null
                 || config.getInputSource() == null
