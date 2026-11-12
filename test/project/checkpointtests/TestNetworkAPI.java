@@ -78,8 +78,7 @@ public class TestNetworkAPI {
                         new JobConfig(
                                 "input.txt", "output.txt"));
 
-        Assertions.assertEquals(
-                "Job completed", response);
+        Assertions.assertEquals("Job completed", response);
 
         verify(storage).clearOutput(
                 any(StorageConfig.class));
