@@ -16,8 +16,10 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public InputData readInputData(StorageConfig config) {
 
-        if (config == null || config.getInputSource() == null) {
-            throw new IllegalArgumentException("Invalid storage config");
+        if (config == null
+                || config.getInputSource() == null
+                || config.getInputSource().isBlank()) {
+            throw new IllegalArgumentException("Invalid input file path");
         }
 
         inputNumbers.clear();
@@ -44,8 +46,10 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public void clearOutput(StorageConfig config) {
 
-        if (config == null || config.getOutputDestination() == null) {
-            throw new IllegalArgumentException("Invalid storage config");
+        if (config == null
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()) {
+            throw new IllegalArgumentException("Invalid output file path");
         }
 
         try {
@@ -58,8 +62,14 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     @Override
     public void writeData(StorageConfig config, ComputeResult result) {
 
-        if (config == null || result == null) {
-            throw new IllegalArgumentException("Config and result are required");
+        if (config == null
+                || config.getOutputDestination() == null
+                || config.getOutputDestination().isBlank()
+                || result == null
+                || result.getOutput() == null
+                || result.getOutput().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Invalid output configuration or result");
         }
 
         try {
