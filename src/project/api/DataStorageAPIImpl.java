@@ -66,7 +66,9 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     }
 
     @Override
-    public void writeData(StorageConfig config, ComputeResult result) {
+    public void writeData(
+            StorageConfig config,
+            ComputeResult result) {
 
         if (config == null
                 || config.getOutputDestination() == null

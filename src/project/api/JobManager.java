@@ -25,7 +25,8 @@ public class JobManager {
                 || config.getInputSource().isBlank()
                 || config.getOutputDestination() == null
                 || config.getOutputDestination().isBlank()) {
-            throw new IllegalArgumentException("Invalid job config");
+            throw new IllegalArgumentException(
+                    "Invalid job config");
         }
 
         return config.getInputSource()
@@ -54,7 +55,8 @@ public class JobManager {
 
         validateStorageConfig(config);
 
-        InputData inputData = dataStorageAPI.readInputData(config);
+        InputData inputData =
+                dataStorageAPI.readInputData(config);
 
         if (inputData == null || inputData.getNumbers() == null) {
             throw new IllegalArgumentException(
@@ -63,7 +65,12 @@ public class JobManager {
 
         dataStorageAPI.clearOutput(config);
 
-        for (int number : inputData.getNumbers()) {
+        for (Integer number : inputData.getNumbers()) {
+
+            if (number == null) {
+                throw new IllegalArgumentException(
+                        "Input data cannot contain null numbers");
+            }
 
             ComputeResult result =
                     computationAPI.compute(new ComputeRequest(number));
