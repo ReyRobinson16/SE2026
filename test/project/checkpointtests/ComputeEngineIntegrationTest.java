@@ -10,6 +10,8 @@ import project.api.ComputationAPI;
 import project.api.ComputationAPIImpl;
 import project.api.ComputeRequest;
 import project.api.ComputeResult;
+import project.api.DataStorageAPI;
+import project.api.InputData;
 import project.api.JobConfig;
 import project.api.StorageConfig;
 import project.api.UserComputeEngineAPIImpl;
@@ -79,6 +81,49 @@ public class ComputeEngineIntegrationTest {
 
         Assertions.assertEquals(
                 "ERROR: integration test failure",
+                response);
+    }
+
+    @Test
+    public void testStorageExceptionReturnsErrorMessage() {
+
+        DataStorageAPI failingStorage =
+                new DataStorageAPI() {
+
+                    @Override
+                    public InputData readInputData(
+                            StorageConfig config) {
+
+                        throw new IllegalStateException(
+                                "storage read failure");
+                    }
+
+                    @Override
+                    public String writeData(
+                            StorageConfig config,
+                            ComputeResult result) {
+
+                        return "SUCCESS";
+                    }
+
+                    @Override
+                    public String clearOutput(
+                            StorageConfig config) {
+
+                        return "SUCCESS";
+                    }
+                };
+
+        UserComputeEngineAPIImpl network =
+                new UserComputeEngineAPIImpl(
+                        new ComputationAPIImpl(),
+                        failingStorage);
+
+        String response = network.startJob(
+                new JobConfig("input", "output"));
+
+        Assertions.assertEquals(
+                "ERROR: storage read failure",
                 response);
     }
 

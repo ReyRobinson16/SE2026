@@ -66,6 +66,7 @@ public class UserComputeEngineAPIImpl
     }
 
     private String getErrorMessage(RuntimeException e) {
+
         String message = e.getMessage();
 
         if (message == null || message.isEmpty()) {

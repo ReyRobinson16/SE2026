@@ -33,7 +33,8 @@ public class JobManager {
                     "Compute request cannot be null");
         }
 
-        ComputeResult result = computationAPI.compute(request);
+        ComputeResult result =
+                computationAPI.compute(request);
 
         if (result == null) {
             throw new IllegalStateException(
