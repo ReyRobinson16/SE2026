@@ -43,6 +43,11 @@ public class JobManager {
 
     public void runFileJob(StorageConfig config) {
 
+        if (config == null) {
+            throw new IllegalArgumentException(
+                    "Storage config cannot be null");
+        }
+
         validateStorageConfig(new JobConfig(
                 config.getInputSource(),
                 config.getOutputDestination()
