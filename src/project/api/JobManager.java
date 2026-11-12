@@ -42,7 +42,8 @@ public class JobManager {
                 computationAPI.compute(new ComputeRequest(number));
 
         if (result == null) {
-            throw new IllegalStateException("Computation returned no result");
+            throw new IllegalStateException(
+                    "Computation returned no result");
         }
 
         dataStorageAPI.writeData(config, result);
@@ -57,7 +58,8 @@ public class JobManager {
         InputData inputData = dataStorageAPI.readInputData(config);
 
         if (inputData == null || inputData.getNumbers() == null) {
-            throw new IllegalArgumentException("Input data cannot be null");
+            throw new IllegalArgumentException(
+                    "Input data cannot be null");
         }
 
         for (Integer number : inputData.getNumbers()) {

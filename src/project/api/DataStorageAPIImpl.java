@@ -19,7 +19,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         if (config == null
                 || config.getInputSource() == null
                 || config.getInputSource().isBlank()) {
-            throw new IllegalArgumentException("Invalid input file path");
+            throw new IllegalArgumentException(
+                    "Invalid input file path");
         }
 
         inputNumbers.clear();
@@ -37,7 +38,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             }
 
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to read input file", e);
+            throw new IllegalStateException(
+                    "Unable to read input file", e);
         }
 
         return new InputData(new ArrayList<>(inputNumbers));
@@ -49,13 +51,17 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         if (config == null
                 || config.getOutputDestination() == null
                 || config.getOutputDestination().isBlank()) {
-            throw new IllegalArgumentException("Invalid output file path");
+            throw new IllegalArgumentException(
+                    "Invalid output file path");
         }
 
         try {
-            Files.deleteIfExists(Path.of(config.getOutputDestination()));
+            Files.deleteIfExists(
+                    Path.of(config.getOutputDestination()));
+
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to clear output file", e);
+            throw new IllegalStateException(
+                    "Unable to clear output file", e);
         }
     }
 
@@ -73,11 +79,13 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
 
         try {
-            Path outputPath = Path.of(config.getOutputDestination());
+            Path outputPath =
+                    Path.of(config.getOutputDestination());
 
             String output = result.getOutput();
 
-            if (Files.exists(outputPath) && Files.size(outputPath) > 0) {
+            if (Files.exists(outputPath)
+                    && Files.size(outputPath) > 0) {
                 output = "," + output;
             }
 
@@ -90,7 +98,8 @@ public class DataStorageAPIImpl implements DataStorageAPI {
             lastResult = result;
 
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to write output file", e);
+            throw new IllegalStateException(
+                    "Unable to write output file", e);
         }
     }
 
