@@ -27,13 +27,20 @@ public class InMemoryDataStorageAPI implements DataStorageAPI {
     }
 
     @Override
-    public void writeData(StorageConfig config, ComputeResult result) {
+    public String writeData(StorageConfig config, ComputeResult result) {
+
+        if (result == null || result.getOutput() == null) {
+            return "ERROR: Invalid compute result";
+        }
+
         outputConfig.addResult(result);
+        return "SUCCESS";
     }
 
     @Override
-    public void clearOutput(StorageConfig config) {
+    public String clearOutput(StorageConfig config) {
         outputConfig.getResults().clear();
+        return "SUCCESS";
     }
 
     public InMemoryInputConfig getInputConfig() {

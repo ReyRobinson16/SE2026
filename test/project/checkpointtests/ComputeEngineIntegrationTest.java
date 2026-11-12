@@ -60,9 +60,11 @@ public class ComputeEngineIntegrationTest {
 
         ComputationAPI failingComputation =
                 new ComputationAPI() {
+
                     @Override
                     public ComputeResult compute(
                             ComputeRequest request) {
+
                         throw new IllegalStateException(
                                 "integration test failure");
                     }
@@ -91,19 +93,24 @@ public class ComputeEngineIntegrationTest {
                     @Override
                     public InputData readInputData(
                             StorageConfig config) {
+
                         throw new IllegalStateException(
                                 "storage read failure");
                     }
 
                     @Override
-                    public void writeData(
+                    public String writeData(
                             StorageConfig config,
                             ComputeResult result) {
+
+                        return "SUCCESS";
                     }
 
                     @Override
-                    public void clearOutput(
+                    public String clearOutput(
                             StorageConfig config) {
+
+                        return "SUCCESS";
                     }
                 };
 
@@ -118,6 +125,42 @@ public class ComputeEngineIntegrationTest {
         Assertions.assertEquals(
                 "ERROR: storage read failure",
                 response);
+    }
+
+    @Test
+    public void testStorageErrorReturnsErrorMessage() {
+
+        InMemoryInputConfig input =
+                new InMemoryInputConfig(List.of(5));
+
+        InMemoryOutputConfig output =
+                new InMemoryOutputConfig();
+
+        InMemoryDataStorageAPI storage =
+                new InMemoryDataStorageAPI(input, output) {
+
+                    @Override
+                    public String clearOutput(
+                            StorageConfig config) {
+
+                        return "ERROR: Storage failure";
+                    }
+                };
+
+        UserComputeEngineAPIImpl network =
+                new UserComputeEngineAPIImpl(
+                        new ComputationAPIImpl(), storage);
+
+        JobConfig job =
+                new JobConfig("input", "output");
+
+        String response = network.startJob(job);
+
+        Assertions.assertTrue(
+                response.startsWith("ERROR:"));
+
+        Assertions.assertFalse(
+                response.equals("Job completed"));
     }
 
     private void verifyResults(
