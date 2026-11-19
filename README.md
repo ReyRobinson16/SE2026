@@ -13,3 +13,7 @@ Output: 100: largest_prime=97 total_primes=25
 Part 2
 
 ![System Architecture Diagram](docs/architecture_diagram.png)
+
+## Checkpoint 6 - Thread Limit
+
+The multi-threaded implementation uses a fixed thread pool with a maximum of 4 worker threads. I chose 4 threads to allow multiple computations to run at the same time without using too many system resources.
