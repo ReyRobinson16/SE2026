@@ -14,7 +14,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     private final List<Integer> inputNumbers = new ArrayList<>();
 
     @Override
-    public InputData readInputData(StorageConfig config) {
+    public synchronized InputData readInputData(StorageConfig config) {
 
         inputNumbers.clear();
 
@@ -65,7 +65,7 @@ public class DataStorageAPIImpl implements DataStorageAPI {
     }
 
     @Override
-    public String writeData(
+    public synchronized String writeData(
             StorageConfig config,
             ComputeResult result) {
 
@@ -104,11 +104,11 @@ public class DataStorageAPIImpl implements DataStorageAPI {
         }
     }
 
-    public List<Integer> getInputNumbers() {
+    public synchronized List<Integer> getInputNumbers() {
         return new ArrayList<>(inputNumbers);
     }
 
-    public ComputeResult getLastResult() {
+    public synchronized ComputeResult getLastResult() {
         return lastResult;
     }
 }
