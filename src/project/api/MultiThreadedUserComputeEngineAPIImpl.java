@@ -59,7 +59,7 @@ public class MultiThreadedUserComputeEngineAPIImpl
                     config.getInputSource(),
                     config.getOutputDestination());
 
-            runParallelJob(storageConfig);
+            runParallelJob(manager, storageConfig);
 
             return "Job completed";
 
@@ -68,25 +68,12 @@ public class MultiThreadedUserComputeEngineAPIImpl
         }
     }
 
-    private void runParallelJob(StorageConfig config) {
-        String clearStatus = dataStorageAPI.clearOutput(config);
-        checkStorageStatus(clearStatus);
+    private void runParallelJob(
+            JobManager manager,
+            StorageConfig config) {
 
-        InputData inputData = dataStorageAPI.readInputData(config);
-
-        if (inputData == null || inputData.getNumbers() == null) {
-            throw new IllegalStateException(
-                    "Input data is invalid");
-        }
-
+        InputData inputData = manager.readJobInput(config);
         List<Integer> numbers = inputData.getNumbers();
-
-        for (Integer number : numbers) {
-            if (number == null) {
-                throw new IllegalArgumentException(
-                        "Input data cannot contain null numbers");
-            }
-        }
 
         ExecutorService executor =
                 Executors.newFixedThreadPool(THREAD_COUNT);
@@ -101,7 +88,7 @@ public class MultiThreadedUserComputeEngineAPIImpl
                                 new ComputeRequest(number))));
             }
 
-            writeResults(config, results);
+            writeResults(manager, config, results);
 
         } finally {
             executor.shutdownNow();
@@ -109,21 +96,13 @@ public class MultiThreadedUserComputeEngineAPIImpl
     }
 
     private void writeResults(
+            JobManager manager,
             StorageConfig config,
             List<Future<ComputeResult>> results) {
 
         for (Future<ComputeResult> future : results) {
             ComputeResult result = getResult(future);
-
-            if (result == null) {
-                throw new IllegalStateException(
-                        "Computation returned no result");
-            }
-
-            String writeStatus =
-                    dataStorageAPI.writeData(config, result);
-
-            checkStorageStatus(writeStatus);
+            manager.writeJobResult(config, result);
         }
     }
 
@@ -139,15 +118,6 @@ public class MultiThreadedUserComputeEngineAPIImpl
         } catch (ExecutionException e) {
             throw new IllegalStateException(
                     "Computation failed", e.getCause());
-        }
-    }
-
-    private void checkStorageStatus(String status) {
-        if (!"SUCCESS".equals(status)) {
-            throw new IllegalStateException(
-                    status == null
-                            ? "Storage operation failed"
-                            : status);
         }
     }
 
