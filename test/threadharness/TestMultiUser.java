@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import project.api.UserComputeEngineAPI;
-import project.api.UserComputeEngineAPIImpl;
+import project.api.MultiThreadedUserComputeEngineAPIImpl;
 
 public class TestMultiUser {
 
@@ -23,7 +23,7 @@ public class TestMultiUser {
 
     @BeforeEach
     public void initializeComputeEngine() {
-        coordinator = new UserComputeEngineAPIImpl();
+        coordinator = new MultiThreadedUserComputeEngineAPIImpl();
     }
 
     @Test

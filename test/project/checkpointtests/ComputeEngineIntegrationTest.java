@@ -14,6 +14,7 @@ import project.api.InputData;
 import project.api.JobConfig;
 import project.api.StorageConfig;
 import project.api.UserComputeEngineAPIImpl;
+import project.api.MultiThreadedUserComputeEngineAPIImpl;
 
 public class ComputeEngineIntegrationTest {
 
@@ -27,6 +28,25 @@ public class ComputeEngineIntegrationTest {
 
         UserComputeEngineAPIImpl network =
                 new UserComputeEngineAPIImpl(
+                        new ComputationAPIImpl(), storage);
+
+        String response = network.startJob(
+                new JobConfig("input", "output"));
+
+        Assertions.assertEquals("Job completed", response);
+        verifyResults(output);
+    }
+
+    @Test
+    public void testMultiThreadedCompleteSystem() {
+        InMemoryInputConfig input =
+                new InMemoryInputConfig(List.of(1, 10, 25));
+        InMemoryOutputConfig output = new InMemoryOutputConfig();
+        InMemoryDataStorageAPI storage =
+                new InMemoryDataStorageAPI(input, output);
+
+        MultiThreadedUserComputeEngineAPIImpl network =
+                new MultiThreadedUserComputeEngineAPIImpl(
                         new ComputationAPIImpl(), storage);
 
         String response = network.startJob(
