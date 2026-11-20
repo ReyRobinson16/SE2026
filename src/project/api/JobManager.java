@@ -20,9 +20,7 @@ public class JobManager {
     }
 
     public String configureJob(JobConfig config) {
-
         validateStorageConfig(config);
-
         return "Job configured";
     }
 
@@ -33,26 +31,31 @@ public class JobManager {
                     "Compute request cannot be null");
         }
 
-        ComputeResult result =
-                computationAPI.compute(request);
-
-        if (result == null) {
-            throw new IllegalStateException(
-                    "Computation returned no result");
-        }
+        ComputeResult result = computationAPI.compute(request);
+        validateResult(result);
     }
 
     public void runFileJob(StorageConfig config) {
 
+        InputData inputData = readJobInput(config);
+
+        for (Integer number : inputData.getNumbers()) {
+
+            ComputeRequest request = new ComputeRequest(number);
+            ComputeResult result = computationAPI.compute(request);
+
+            writeJobResult(config, result);
+        }
+    }
+
+    public InputData readJobInput(StorageConfig config) {
+
         validateStorageConfig(config);
 
-        String clearStatus =
-                dataStorageAPI.clearOutput(config);
-
+        String clearStatus = dataStorageAPI.clearOutput(config);
         checkStorageStatus(clearStatus);
 
-        InputData inputData =
-                dataStorageAPI.readInputData(config);
+        InputData inputData = dataStorageAPI.readInputData(config);
 
         if (inputData == null || inputData.getNumbers() == null) {
             throw new IllegalStateException(
@@ -66,23 +69,24 @@ public class JobManager {
             }
         }
 
-        for (Integer number : inputData.getNumbers()) {
+        return inputData;
+    }
 
-            ComputeRequest request =
-                    new ComputeRequest(number);
+    public void writeJobResult(
+            StorageConfig config,
+            ComputeResult result) {
 
-            ComputeResult result =
-                    computationAPI.compute(request);
+        validateResult(result);
 
-            if (result == null) {
-                throw new IllegalStateException(
-                        "Computation returned no result");
-            }
+        String writeStatus = dataStorageAPI.writeData(config, result);
+        checkStorageStatus(writeStatus);
+    }
 
-            String writeStatus =
-                    dataStorageAPI.writeData(config, result);
+    private void validateResult(ComputeResult result) {
 
-            checkStorageStatus(writeStatus);
+        if (result == null) {
+            throw new IllegalStateException(
+                    "Computation returned no result");
         }
     }
 
