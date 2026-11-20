@@ -11,7 +11,10 @@ public class ComputationAPIImpl implements ComputationAPI {
                     "Compute request cannot be null");
         }
 
+        // All integer inputs are valid.
+        // Numbers below 2 have no primes, so the results stay 0.
         int number = request.getInputNumber();
+
         int largestPrime = 0;
         int totalPrimes = 0;
 
